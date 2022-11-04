@@ -74,7 +74,5 @@ server.on('listening', () => {
 });
 
 
-// le serveur écoute :
-// soit la variable d'environnement du port grâce à process.env.PORT : si la plateforme de déploiement propose un port par défaut, c'est celui-ci qu'on écoutera ;
-// soit le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
-server.listen(process.env.PORT || 3000);
+// le serveur écoute sur le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
+server.listen(port, () => console.log(`Notre serveur fonctionne sur : http://localhost:${port}`));

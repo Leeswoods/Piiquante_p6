@@ -5,33 +5,16 @@ const express = require('express');
 // Permet de crée une application express 
 const app = express();
 
-// Middlware
-// Va recevoir la requête, la réponse et la fcontion next
-app.use ((req, res, next) => {
-    console.log('Requête reçue !');
-    next();
-});
+// Connexion à MongoDB
+// Importer le module de Mongoose
+const mongoose = require('mongoose');
 
-// Middlware
-// Va recevoir la requête, la réponse et la fcontion next
-app.use ((req, res, next) => {
-    res.status(201);
-    next();
-});
-
-// Réponse en format JSON
-// Donne le moyen de répondre pour éviter une erreur 404
-// Middlware
-app.use ((req, res, next) => {
-    res.json({message : 'Votre requête a bien été reçue !'});
-    next();
-});
-
-// Middlware
-// Va recevoir la requête, la réponse et la fcontion next
-app.use ((req, res) => {
-    console.log('Réponse envoyé avec succès');
-});
+// Précision sur quelle base de données nous allons travailler
+mongoose.connect('mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovhk.mongodb.net/?retryWrites=true&w=majority', 
+    { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Exporter l'application / exporter la constante
 // Permet d'y accéder depuis n'importe qu'elle fichier
