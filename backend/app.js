@@ -8,7 +8,6 @@ const app = express();
 // Connexion à MongoDB
 // Importer le module de Mongoose
 const mongoose = require('mongoose');
-
 // Précision sur quelle base de données nous allons travailler
 mongoose.connect('mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovhk.mongodb.net/?retryWrites=true&w=majority', 
     { useNewUrlParser: true,
