@@ -22,7 +22,7 @@ const normalizePort = val => {
     return false;
 };
 
-// la constante port écoute :
+// La constante port écoute :
 // Prend en compte les conditions de la fonction normalizePort
 // soit la variable d'environnement du port grâce à process.env.PORT : si la plateforme de déploiement propose un port par défaut, c'est celui-ci qu'on écoutera ;
 // soit le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
@@ -34,7 +34,7 @@ const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 // La gestion d'erreur
-// la fonction errorHandler  recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur ;
+// la fonction errorHandler recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur ;
 const errorHandler = error => {
     if (error.syscall !== 'listen') {
         throw error;
