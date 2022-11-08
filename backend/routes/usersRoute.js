@@ -10,10 +10,10 @@ const usersController = require('../controllers/usersControllers');
 // Route POST création de compte utilisateur et connexion
 
 // Inscription route 
-// router.post("/signup", usersController.signup);
+router.post("/signup", usersController.signup);
 
 // Connexion route
-// router.post("/login", usersController.login);
+router.post("/login", usersController.login);
 
 // Exporter le router 
 module.exports = router;

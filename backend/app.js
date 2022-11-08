@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 // Utilisez ( express.json() ) pour analyser le corps de la requête.
 app.use(express.json());
 
-// Utiliser les Routes  
+// Utiliser & Enregistrer les Routes  
 app.use("/api/auth", userRoute);
 
 // Exporter l'application / exporter la constante
