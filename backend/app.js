@@ -1,3 +1,6 @@
+// charger env variables
+const dotenv = require("dotenv").config();
+
 // Adresse MongoDB base de donnée
 const dataBase = 'mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovhk.mongodb.net/?retryWrites=true&w=majority';
 
