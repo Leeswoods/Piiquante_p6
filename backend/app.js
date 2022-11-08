@@ -10,7 +10,7 @@ const app = express();
 
 // Permettre à nos deux origines (localhost:3000 et localhost:4200) de communiquer 
 // Pour cela, nous devons ajouter des headers à notre objet  response
-// Pour utiliser le Middleware, on utilise la méthode .use 
+// Pour utiliser le Middleware, on utilise la méthode .use / La méthode app.use() vous permet d'attribuer un middleware à une route spécifique de votre application.
 // Ce Middleware sera appliquer  sur toutes les routes et toutes les requêtes envoyé à notre serveur 
 // Ce Middleware permet à l'API d'accéder à l'application (localhost:4200)
 
@@ -25,7 +25,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
+// Pour gérer la requête POST venant de l'application front-end, on a besoin d'en extraire le corps JSON.
+// Middleware qui permet d'intercepter toutes les requêtes qui ont comme Content-Type  application/json  et met à disposition leur  body  directement sur l'objet req 
+// Utilisez ( express.json() ) pour analyser le corps de la requête.
+app.use(express.json());
 
 // Connexion à MongoDB
 // Importer le module de Mongoose

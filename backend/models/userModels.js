@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 // Créaction de notre schhéma de donnée 
 // Utilisation de la fonction Schema qui est mit à dispostion grâce au package mongoose
 // On passe un objet à la fonction Schema qui va dicter les différents champs dont notre userSchema  aura besoin
+// la propriété unique indique à Mongoose que chaque document doit avoir une valeur unique pour un chemin donné
 const userSchema = mongoose.Schema({
-    email : {type: String, required: true},
+    email : {type: String, required: true, unique: true},
     password : {type: String, required: true},
 })
 
