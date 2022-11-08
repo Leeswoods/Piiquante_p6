@@ -4,9 +4,23 @@ const dataBase = 'mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovh
 // Importe le package Express 
 const express = require('express');
 
+// Importer le module de Mongoose
+const mongoose = require('mongoose');
+
+// Importer les routes
+const userRoute = require('./routes/usersRoute');
+
 // Notre application
 // Permet de crée une application express 
 const app = express();
+
+// Connexion à MongoDB
+// Précision sur quelle base de données nous allons travailler
+mongoose.connect(dataBase, 
+    { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Permettre à nos deux origines (localhost:3000 et localhost:4200) de communiquer 
 // Pour cela, nous devons ajouter des headers à notre objet  response
@@ -30,15 +44,8 @@ app.use((req, res, next) => {
 // Utilisez ( express.json() ) pour analyser le corps de la requête.
 app.use(express.json());
 
-// Connexion à MongoDB
-// Importer le module de Mongoose
-const mongoose = require('mongoose');
-// Précision sur quelle base de données nous allons travailler
-mongoose.connect(dataBase, 
-    { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+// Utiliser les Routes  
+app.use("/api/auth", userRoute);
 
 // Exporter l'application / exporter la constante
 // Permet d'y accéder depuis n'importe qu'elle fichier
