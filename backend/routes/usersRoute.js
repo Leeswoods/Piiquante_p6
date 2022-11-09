@@ -15,5 +15,5 @@ router.post("/signup", usersController.signup);
 // Connexion route
 router.post("/login", usersController.login);
 
-// Exporter le router 
+// Exporter la route
 module.exports = router;

@@ -7,15 +7,20 @@ const dataBase = 'mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovh
 // Importe le package Express 
 const express = require('express');
 
+// Notre application
+// Permet de crée une application express 
+const app = express();
+
 // Importer le module de Mongoose
 const mongoose = require('mongoose');
 
 // Importer les routes
 const userRoute = require('./routes/usersRoute');
 
-// Notre application
-// Permet de crée une application express 
-const app = express();
+
+// Importer path
+const path = require('path');
+
 
 // Connexion à MongoDB
 // Précision sur quelle base de données nous allons travailler
@@ -49,6 +54,9 @@ app.use(express.json());
 
 // Utiliser & Enregistrer les Routes  
 app.use("/api/auth", userRoute);
+
+// définir le chemin où l'image sera stockée
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 // Exporter l'application / exporter la constante
 // Permet d'y accéder depuis n'importe qu'elle fichier
