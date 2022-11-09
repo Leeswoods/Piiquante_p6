@@ -1,8 +1,6 @@
 // charger env variables
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv").config({ path: './.env' }); 
 
-// Adresse MongoDB base de donnée
-const dataBase = 'mongodb+srv://Leeswoods:Projet6_Openclassrooms@cluster0.vdgovhk.mongodb.net/?retryWrites=true&w=majority';
 
 // Importe le package Express 
 const express = require('express');
@@ -21,10 +19,9 @@ const userRoute = require('./routes/usersRoute');
 // Importer path
 const path = require('path');
 
-
 // Connexion à MongoDB
 // Précision sur quelle base de données nous allons travailler
-mongoose.connect(dataBase, 
+mongoose.connect(process.env.dataBase, 
     { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
