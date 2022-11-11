@@ -14,9 +14,11 @@ const mongoose = require('mongoose');
 
 // Importer les routes
 const userRoute = require('./routes/usersRoute');
+const sauceRoute = require('./routes/saucesRoute')
 
 
 // Importer path
+// Le module Path permet de travailler avec des répertoires et des chemins de fichiers.
 const path = require('path');
 
 // Connexion à MongoDB

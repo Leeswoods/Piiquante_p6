@@ -2,11 +2,13 @@
 const mongoose = require('mongoose');
 
 // Importer Unique Validator
+// mongoose-unique-validator est un plugin qui ajoute une validation de pré-enregistrement pour les champs uniques dans un schéma Mongoose.
+// Cela facilite grandement la gestion des erreurs, car vous obtiendrez une erreur de validation Mongoose lorsque vous tenterez de violer une contrainte unique 
 const uniqueValidator = require('mongoose-unique-validator');
 
 // Créaction de notre schhéma de donnée 
 // Utilisation de la fonction Schema qui est mit à dispostion grâce au package mongoose
-// On passe un objet à la fonction Schema qui va dicter les différents champs dont notre userSchema  aura besoin
+// On passe un objet à la fonction Schema qui va dicter les différents champs dont notre userSchema aura besoin
 // la propriété unique indique à Mongoose que chaque document doit avoir une valeur unique pour un chemin donné
 const userSchema = mongoose.Schema({
     email : {type: String, required: true, unique: true},

@@ -22,8 +22,8 @@ const normalizePort = val => {
     return false;
 };
 
-// La constante port écoute :
 // Prend en compte les conditions de la fonction normalizePort
+// La constante port écoute :
 // soit la variable d'environnement du port grâce à process.env.PORT : si la plateforme de déploiement propose un port par défaut, c'est celui-ci qu'on écoutera ;
 // soit le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
 const port = normalizePort(process.env.PORT || '3000');

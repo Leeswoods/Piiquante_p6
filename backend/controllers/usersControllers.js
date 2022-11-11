@@ -1,3 +1,13 @@
+// const TokenGenerator = require('uuid-token-generator');
+ 
+// const tokgen = new TokenGenerator(256, TokenGenerator.BASE62); // Default is a 128-bit token encoded in base58
+// tokgen.generate();
+
+// console.log(tokgen.generate());
+
+// charger env variables
+const dotenv = require("dotenv").config({ path: './.env' }); 
+
 // Importer le Users Models
 const User = require('../models/usersModels');
 
@@ -38,7 +48,6 @@ exports.signup = (req, res, next) => {
     // Promesse rejetée : Code 500 : Indique une erreur avec le service web
     .catch(error => res.status(500).json({error}));
 };
-
 // Middleware 
 // Fonction Login pour la connexion des utilisateurs existants
 // On va vérifier  qu'un utilisateur existe dans notre base de donnée 
@@ -82,9 +91,9 @@ exports.login = (req, res, next) => {
                 userId: user._id,
                 // Fonction sign de jsonwebtoken
                 token: jwt.sign (
-                    { userId: user._id },
-                    `${process.env.TOKEN}`,
-                    { expiresIn: '24h' }
+                    { userId: user._id }, // On encode le userId en début de TOKEN (pour affiliation à un objet lui seul pourra le modifier)
+                    process.env.TOKEN, // RANDOM TOKEN SECRET 
+                    { expiresIn: '24h' } // Le Token exprire dans 24h et ne sera plus valide
                 )
             });
         })
