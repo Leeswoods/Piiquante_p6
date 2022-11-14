@@ -1,6 +1,9 @@
 // Middleware pour vérifier les info d'authentification envoyé par le client 
 // Créaction d'un Middleware qui va prendre le token envoyé par le client, va vérifier la validité et permettre à nos routes  d'exploiter les  infos 
 
+// charger env variables
+const dotenv = require("dotenv").config({ path: './.env' }); 
+
 // Importer package jsonwebtoken
 const jwt = require('jsonwebtoken');
 

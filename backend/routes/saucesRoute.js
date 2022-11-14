@@ -16,22 +16,23 @@ const saucesController = require('../controllers/saucesControllers');
 // Les Routes 
 
 // Get ; tableau de toutes les sauces
-// router.get("/", auth, saucesController);
+router.get("/", auth, saucesController.getAllSauces);
 
-// // Get ; Renvoie la sauce avec l’_id fourni
-// router.get("/:id", auth, saucesController);
+// Get ; Renvoie la sauce avec l’_id fourni
+router.get("/:id", auth, saucesController.getOneSauce);
 
-// // Post ; créaction sauces
-// router.post("/", auth, multer, saucesController);
+// Post ; créaction sauces
+router.post("/", auth, multer, saucesController.createSauce);
 
-// // Put ; modifier une sauce
-// router.put("/:id", auth, multer, saucesController);
+// Put ; modifier une sauce
+// router.put("/:id", auth, multer, saucesController.modifySauce);
 
 // // Delete ; supprime une sauce 
 // router.delete("/:id", auth, saucesController);
 
 // // Post ; sauce like 
 // router.post("/:id/like", auth, saucesController);
+
 
 // Exporter la route
 module.exports = router;

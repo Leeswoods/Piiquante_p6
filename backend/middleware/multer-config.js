@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
     // Explique à Multer quel nom de fichier autorisé 
     // la fonction filename indique à multer d'utiliser le nom d'origine, de remplacer les espaces par des underscores et d'ajouter un timestamp Date.now() comme nom de fichier. 
     // Elle utilise ensuite la constante dictionnaire de type MIME pour résoudre l'extension de fichier appropriée.
-    filename: (req, files, callback) => {
+    filename: (req, file, callback) => {
         const name = file.originalname.split('').join('_');
         // Générer l'extension du fichier
         const extension = MIME_TYPES[file.mimetype];
