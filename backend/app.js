@@ -47,12 +47,13 @@ app.use((req, res, next) => {
 });
 
 // Pour gérer la requête POST venant de l'application front-end, on a besoin d'en extraire le corps JSON.
-// Middleware qui permet d'intercepter toutes les requêtes qui ont comme Content-Type  application/json  et met à disposition leur  body  directement sur l'objet req 
+// Middleware qui permet d'intercepter toutes les requêtes qui ont comme Content-Type application/json et met à disposition leur body directement sur l'objet req 
 // Utilisez ( express.json() ) pour analyser le corps de la requête.
 app.use(express.json());
 
 // Utiliser & Enregistrer les Routes  
 app.use("/api/auth", userRoute);
+app.use("/api/sauces", sauceRoute);
 
 // définir le chemin où l'image sera stockée
 app.use('/images', express.static(path.join(__dirname, 'images')))
