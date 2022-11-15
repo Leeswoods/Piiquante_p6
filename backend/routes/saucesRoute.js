@@ -28,10 +28,10 @@ router.post("/", auth, multer, saucesController.createSauce);
 router.put("/:id", auth, multer, saucesController.modifySauce);
 
 // // Delete ; supprime une sauce 
-router.delete("/:id", auth, saucesController.deleteSauce);
+// router.delete("/:id", auth, saucesController.deleteSauce);
 
 // // Post ; sauce like 
-// router.post("/:id/like", auth, saucesController);
+// router.post("/:id/like", auth, saucesController.likeSauceOrNot);
 
 
 // Exporter la route

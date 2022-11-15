@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaucesService } from '../services/sauces.service';
 import { Sauce } from '../models/Sauce.model';
@@ -13,14 +13,14 @@ import { catchError, EMPTY, switchMap, tap } from 'rxjs';
 })
 export class SauceFormComponent implements OnInit {
 
-  sauceForm!: UntypedFormGroup;
+  sauceForm!: FormGroup;
   mode!: string;
   loading!: boolean;
   sauce!: Sauce;
   errorMsg!: string;
   imagePreview!: string;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private sauces: SaucesService,

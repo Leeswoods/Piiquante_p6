@@ -1,5 +1,4 @@
 // Importer le Sauce Models
-const sauce = require('../models/saucesModels');
 const Sauce = require('../models/saucesModels');
 
 
@@ -28,7 +27,7 @@ exports.createSauce = (req, res, next) => {
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
             // likes: 0, // Mettre les Likes à 0
             // dislikes: 0, // Mettre les DisLikes à 0
-            // usersLikes: [], // Tableau des usersLikes vide 
+            // usersLiked: [], // Tableau des usersLikes vide 
             // usersDisliked: [], // Tableau des usersDisliked vide 
         });
         // Enregistrer dans la base de donnée 
@@ -38,7 +37,7 @@ exports.createSauce = (req, res, next) => {
         .then(() => { res.status(201).json({ message: 'La sauce a bien été enregistrer !'})})
         // Envoie une erreur 
         // 400 : indique que votre requête n’est pas conforme à ce qui est attendu
-        .catch(error => res.status(400).json({ error }));
+        .catch(error => { res.status(500).json({ error })});
 };
 
 // Obtenir une sauce grâce à l'ID 
@@ -69,7 +68,7 @@ exports.getAllSauces = (req, res, next) => {
         // Si les sauces n'ont pas été trouver
         .then(sauces => res.status(200).send(sauces)) // La sauce est trouvée
             // 404 : indique que la ressource demandée n’existe pas
-        .catch(error => res.status(404).json({ error }))
+        .catch(error => res.status(400).json({ error }))
         // Si les sauces ont été trouver 
         // 200 : indique que tout s’est bien passé
 }
@@ -87,10 +86,6 @@ exports.modifySauce = (req, res, next) => {
 };
 
 // Supprimer une sauce 
-exports.deleteSauce = (req, res, next) => {
-    Sauce.deleteOne({_id: req.params.id})
-        .then(() => res.status(200).json({message: 'Sauce supprimée !'}))
-        .catch(error => res.status(400).json({error}));
-};
+
 
 // Likes ou Dislikes une sauce 

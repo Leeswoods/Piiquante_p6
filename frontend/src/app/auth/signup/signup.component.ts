@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, switchMap, tap } from 'rxjs';
@@ -11,11 +11,11 @@ import { catchError, EMPTY, switchMap, tap } from 'rxjs';
 })
 export class SignupComponent implements OnInit {
 
-  signupForm!: UntypedFormGroup;
+  signupForm!: FormGroup;
   loading!: boolean;
   errorMsg!: string;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private auth: AuthService,
               private router: Router) { }
 
