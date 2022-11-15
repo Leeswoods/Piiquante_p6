@@ -1,6 +1,8 @@
 // Importer le Sauce Models
 const Sauce = require('../models/saucesModels');
 
+// Importer
+const fs = require('fs');
 
 // Créaction d'une sauce 
 exports.createSauce = (req, res, next) => {
@@ -75,17 +77,51 @@ exports.getAllSauces = (req, res, next) => {
 
 // Modifier une sauce 
 exports.modifySauce = (req, res, next) => {
+
+    // Est-ce que l'utilisateur a transmit le fichier ?
     const sauceObject = req.file ?
     {
+        // on récupère l'object en le parsant
         ...JSON.parse(req.body.sauce),
+        // on récupère l'url de l'image
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body};
-    Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})
-        .then(() => res.status(200).json({message: 'Sauce modifiée !'}))
-        .catch(error => res.status(400).json({error}));
+    } 
+    // Si fichier pas transmit 
+    : {...req.body};
+    delete sauceObject._userId;
+    Sauce.findOne({_id: req.params.id})
+    .then((sauce) => {
+        if (sauce.userId != req.auth.userId) {
+            res.status(401).json({ message : 'Non-autorisé'});
+        } else {
+            Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id})
+            .then(() => res.status(200).json({message : 'Sauce modifiée !'}))
+            .catch(error => res.status(401).json({ error }));
+        }
+    })
+    .catch((error) => {
+        res.status(400).json({ error });
+    });
 };
 
 // Supprimer une sauce 
-
+exports.deleteSauce = (req, res, next) => {
+    Sauce.findOne({_id: req.params.id})
+        .then(sauce => {
+            if (sauce.userId != req.auth.userId) {
+                res.status(401).json({ message : 'Non-autorisé'});
+            } else {
+                const filename = sauce.imageUrl.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
+                    Sauce.deleteOne({_id: req.params.id})
+                        .then(() => { res.status(200).json({message: 'Sauce supprimé !'})})
+                        .catch(error => res.status(401).json({ error }));
+                });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({ error });
+        });
+};
 
 // Likes ou Dislikes une sauce 
