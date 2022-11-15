@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // Créaction de notre schhéma de donnée 
 // Utilisation de la fonction Schema qui est mit à dispostion grâce au package mongoose
 // On passe un objet à la fonction Schema qui va dicter les différents champs dont notre userSchema  aura besoin
-const saucesSchema = mongoose.Schema({
+const sauceSchema = mongoose.Schema({
     userId: {type: String, required: true},
     name: {type: String, required: true},
     manufacturer: {type: String, required: true},
@@ -18,4 +18,4 @@ const saucesSchema = mongoose.Schema({
     usersDisliked: {type: [String]},
 })
 
-module.exports = mongoose.model('Sauce', saucesSchema);
+module.exports = mongoose.model('Sauce', sauceSchema);

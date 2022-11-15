@@ -10,7 +10,7 @@ const usersController = require('../controllers/usersControllers');
 // Route POST création de compte utilisateur et connexion
 
 // Inscription route 
-router.post("/signup", usersController.signup);
+router.post("/signup", usersController.signUp);
 
 // Connexion route
 router.post("/login", usersController.login);

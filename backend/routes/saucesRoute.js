@@ -25,10 +25,10 @@ router.get("/:id", auth, saucesController.getOneSauce);
 router.post("/", auth, multer, saucesController.createSauce);
 
 // Put ; modifier une sauce
-// router.put("/:id", auth, multer, saucesController.modifySauce);
+router.put("/:id", auth, multer, saucesController.modifySauce);
 
 // // Delete ; supprime une sauce 
-// router.delete("/:id", auth, saucesController);
+router.delete("/:id", auth, saucesController.deleteSauce);
 
 // // Post ; sauce like 
 // router.post("/:id/like", auth, saucesController);
