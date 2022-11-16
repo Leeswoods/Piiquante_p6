@@ -7,10 +7,15 @@ const router = express.Router();
 // Importer le Users Controllers
 const usersController = require('../controllers/usersControllers');
 
+const auth = require('../middleware/auth');
+
+const User = require('../models/usersModels');
+
+
 // Route POST création de compte utilisateur et connexion
 
 // Inscription route 
-router.post("/signup", usersController.signUp);
+router.post("/signup", usersController.signup);
 
 // Connexion route
 router.post("/login", usersController.login);

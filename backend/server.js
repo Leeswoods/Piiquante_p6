@@ -8,6 +8,10 @@ const http = require('http');
 // Importe le package app grâce à require
 const app = require('./app');
 
+// Import du fichier .dotenv pour accéder aux variables d'environnement
+const dotenv = require('dotenv');
+dotenv.config();
+
 // Ajouter la normalisation de port
 // Fonction qui renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne grâce à parseInt
 const normalizePort = val => {
@@ -45,15 +49,15 @@ const errorHandler = error => {
     const address = server.address();
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
     switch (error.code) {
-        case 'EACCES':
+      case 'EACCES':
         console.error(bind + ' requires elevated privileges.');
         process.exit(1);
         break;
-        case 'EADDRINUSE':
+      case 'EADDRINUSE':
         console.error(bind + ' is already in use.');
         process.exit(1);
         break;
-        default:
+      default:
         throw error;
     }
 };
@@ -75,4 +79,4 @@ server.on('listening', () => {
 
 
 // le serveur écoute sur le port 3000, ce qui nous servira dans le cas de notre plateforme de développement.
-server.listen(port, () => console.log(`Notre serveur fonctionne sur : http://localhost:${port}`));
+server.listen(port);
