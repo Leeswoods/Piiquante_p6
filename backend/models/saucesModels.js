@@ -1,7 +1,9 @@
-// Import du package Mongoose pour faire l'interface entre l'app et MongoDB
+// Importer le module de Mongoose
 const mongoose = require('mongoose');
 
-// Construction du schéma de données d'une fiche sauce
+// Créaction de notre schhéma de donnée 
+// Utilisation de la fonction Schema qui est mit à dispostion grâce au package mongoose
+// On passe un objet à la fonction Schema qui va dicter les différents champs dont notre userSchema  aura besoin
 const sauceSchema = mongoose.Schema({
     userId: {type: String, required: true},
     name: {type: String, required: true},
@@ -16,5 +18,4 @@ const sauceSchema = mongoose.Schema({
     usersDisliked: {type: [String]}
 });
 
-// Export du schéma de données 
 module.exports = mongoose.model('Sauce', sauceSchema);

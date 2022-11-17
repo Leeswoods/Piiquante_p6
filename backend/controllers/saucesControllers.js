@@ -143,3 +143,100 @@ exports.modifySauce = (req, res, next) => {
 
 
 // Likes ou Dislikes une sauce 
+exports.likeSauce = (req, res, next) => {
+
+    // Affichage du req.body / permet de récupérer le userId et le likes ou dislikes
+
+    // Récupérer l'id dans l'url de la requête
+
+    // Transoformez l'id en _id 
+
+    // Aller chercher l'objet (la sauce) dans la base de donnée 
+    Sauce.findOne({ _id: req.params.id })
+        // Réussite
+        .then((sauce) => {
+            
+            // Mise en place d'un switch case ()
+            // L'instruction switch évalue une expression et, selon le résultat obtenu et le cas associé, exécute les instructions correspondantes.
+            switch (req.body.like) {
+
+                // Likes = 1 (likes +1)
+                case 1: // Lorsque l'utilisateur clique sur "like" pour ajouter un "like"
+
+                    // utilisation de la méthode javascript includes()
+                    if (!sauce.usersLiked.includes(req.body.userId) && req.body.like === 1) {
+                        // Mise à jour de la Base de donnée 
+                        Sauce.updateOne(
+                            { _id: req.params.id }, 
+                            {
+                            // utilisation de l'opérateur $inc (mogoDB)
+                            $inc: {likes: 1}, // Incrémente un champ d'une valeur spécifiée et à la forme suivante 
+
+                            // utilisation de l'opérateur $push (mogoDB)
+                            $push : { usersLiked: req.body.userId } // ajoute une valeur spécifiée à un tableau
+
+                            }
+                        )
+                        .then( () => res.status(201).json({ message : "Like +1"}))
+                        .catch((error) => res.status(400).json({ error }));
+                    }
+                    break;
+                
+                // Likes = -1 (dislikes = +1)
+                case -1 : // Lorsque l'utilisateur clique sur "dislike" pour ajouter un "dislike"
+                    if (!sauce.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
+                        // Mise à jour de la Base de donnée
+                        Sauce.updateOne(
+                            { _id: req.params.id },
+                            {
+                                // utilisation de l'opérateur $inc (mogoDB)
+                                $inc: { dislikes: 1 }, // Incrémente un champ d'une valeur spécifiée et à la forme suivante 
+
+                                // utilisation de l'opérateur $push (mogoDB)
+                                $push: { usersDisliked: req.body.userId } // ajoute une valeur spécifiée à un tableau
+                            }
+                        )
+                            .then(() => res.status(201).json({ message: "Dislike +1" }))
+                            .catch(error => res.status(400).json({ error }));
+                    }
+                    break;
+            
+                case 0 :
+                    // Likes = 0 (likes = 0, pas de vote)
+                    if (sauce.usersLiked.includes(req.body.userId)) { // Clic sur "like" et retour à 0
+                        // Mise à jour de la Base de donnée
+                        Sauce.updateOne(
+                            { _id: req.params.id },
+                            {
+                                // utilisation de l'opérateur $inc (mogoDB)
+                                $inc: { likes: -1 }, // Incrémente un champ d'une valeur spécifiée et à la forme suivante 
+
+                                // utilisation de l'opérateur $pull (mogoDB)
+                                $pull: { usersLiked: req.body.userId } // supprime d'un tableau existant toutes les instances d'une valeur ou de valeurs qui correspondent à une condition spécifiée.
+                            }
+                        )
+                            .then(() => res.status(201).json({ message: "Like 0" }))
+                            .catch(error => res.status(400).json({ error }));
+                    }
+                    // Likes = 0 (dislikes = 0)
+                    if (sauce.usersDisliked.includes(req.body.userId)) { // Clic sur "dislike" et retour à 0
+                        // Mise à jour de la Base de donnée
+                        Sauce.updateOne(
+                            { _id: req.params.id },
+                            {
+                                // utilisation de l'opérateur $inc (mogoDB)
+                                $inc: { dislikes: -1 }, // Incrémente un champ d'une valeur spécifiée et à la forme suivante 
+
+                                // utilisation de l'opérateur $pull (mogoDB)
+                                $pull: { usersDisliked: req.body.userId } // supprime d'un tableau existant toutes les instances d'une valeur ou de valeurs qui correspondent à une condition spécifiée.
+                            }
+                        )
+                            .then(() => res.status(201).json({ message: "Dislike 0" }))
+                            .catch(error => res.status(400).json({ error }));
+                    }
+                    break;
+            }
+        })
+        // Echec
+        .catch((error) => res.status(404).json({ error }));
+};
