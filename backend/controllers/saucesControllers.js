@@ -100,7 +100,46 @@ exports.deleteSauce = (req, res, next) => {
 
 
 // Modifier une sauce 
+exports.modifySauce = (req, res, next) => {
 
+    // Est-ce qu'il y a un champ file ? 
+    const sauceObject = req.file ? {
+        // Si  c'est le cas, on parse la chaîne de caractère 
+        ...JSON.parse(req.body.sauce),
+        // Et en recréant l'URL de l'image 
+        imageUrl  : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
+    // Si ce n'est pas le cas, on récupère la sauce dans le corps de la requête  
+    : { ...req.body};
+
+    // Supprimer le userId pour éviter que quelqu'un crée une sauce à son nom et le modifie pour l'assigner à quelqu'un d'autre
+    // Mesure de sécuerité 
+    delete sauceObject._userId;
+
+    // Chercher la sauce dans la base de donnée
+    Sauce.findOne({_id: req.params.id})
+        // Réussite
+        .then((sauce) => {
+            // Si le champ id (dans la base de donnée) est différent de l'userId qui vient du token
+            if (sauce.userId != req.auth.userId){
+                res.status(401).json({message : 'Non-autorisé'}); // Message d'erreur
+            }
+            // Si c'est le bon utilisateur 
+            else {
+                // Mettre à jour notre sauce
+                Sauce.updateOne({_id: req.params.id}, { ...sauceObject, _id: req.params.id})
+                // Réussite
+                .then(() => res.status(200).json({message : 'La sauce a été modifier avec succès !'})) // Message d'erreur
+                // Erreur  
+                .catch(error => res.status(401).json({ error })); 
+            }
+
+        })
+        // Erreur
+        .catch(error => {
+            res.status(400).json({error});
+        });
+};
 
 
 // Likes ou Dislikes une sauce 
