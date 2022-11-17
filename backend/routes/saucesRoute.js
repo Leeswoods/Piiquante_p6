@@ -1,39 +1,21 @@
-// Importe le package Express 
+// Import d'Express et de sa méthode Router pour la création des routes
 const express = require('express');
-
-// Créaction d'un router avec la méthode router d'Express 
 const router = express.Router();
-
-// Importer le middleware auth 
+// Import du middleware d'authentification pour sécuriser toutes les routes
 const auth = require('../middleware/auth');
-
-// Importer le middleware multer pour les images
+// Import du middleware Multer pour la gestion des fichiers dans les requêtes HTTP
 const multer = require('../middleware/multer-config');
 
-// Importer le Sauces Controllers
-const saucesController = require('../controllers/saucesControllers');
+// Import des logiques métiers relatives aux différentes requêtes en lien avec les fiches sauce
+const sauceCtrl = require('../controllers/saucesControllers');
 
+// Routes
+router.post('/', auth, multer, sauceCtrl.createSauce);
+router.get('/', auth, sauceCtrl.getAllSauces);
+router.get('/:id', auth, sauceCtrl.getOneSauce);
+router.put('/:id', auth, multer, sauceCtrl.modifySauce);
+router.delete('/:id', auth, sauceCtrl.deleteSauce);
+// router.post('/:id/like', auth, sauceCtrl.likeSauce);
 
-// Les Routes 
-
-// Post ; créaction sauces
-router.post("/", auth, multer, saucesController.createSauce);
-
-// Get ; tableau de toutes les sauces
-router.get("/", auth, saucesController.getAllSauces);
-
-// Get ; Renvoie la sauce avec l’_id fourni
-router.get("/:id", auth, saucesController.getOneSauce);
-
-// Put ; modifier une sauce
-// router.put("/:id", auth, multer, saucesController.modifySauce);
-
-// // Delete ; supprime une sauce 
-router.delete("/:id", auth, saucesController.deleteSauce);
-
-// Post ; sauce like 
-// router.post("/:id/like", auth, saucesController.likeSauce);
-
-
-// Exporter la route
+// Export des routes 
 module.exports = router;
