@@ -2,6 +2,7 @@
 const Sauce = require('../models/saucesModels');
 
 // Import du package FS pour gérer le système de fichiers du serveur
+// Il nous donne accès aux fonctions qui nous permettent de modifier le système de fichiers, y compris aux fonctions permettant de supprimer les fichiers.
 const fs = require('fs');
 
 
@@ -64,11 +65,42 @@ Sauce.findOne({_id: req.params.id})
 };
 
 // Supprimer une sauce 
+exports.deleteSauce = (req, res, next) => {
 
+    //  Pour savoir si c'est le bon utilisateur 
+    Sauce.findOne({_id: req.params.id})
+        // Cas de succès
+        // Vérifier si c'est bien le propriétaire de la sauce qui nous demande la suppression
+        .then(sauce => {
+            // Si ce n'est pas le cas
+            if (sauce.userId != req.auth.userId) {
+                res.status(401).json({message : 'Non-autorisé'}); // Message d'erreur 
+            }
+            // Si c'est le bon utilisateur 
+            else {
+                // Récupérer le nom du fichier 
+                const filename = sauce.imageUrl.split('/images')[1];
+                // fonction unlink du package fs pour supprimer le fichier et le callback à exécuter une fois ce fichier supprimé.
+                fs.unlink(`images/${filename}`, () => {
+                    // Supprime la sauce de la base de donnée
+                    Sauce.deleteOne({_id: req.params.id})
+                        // Gérer le succès 
+                        .then(() => { res.status(200).json({message: 'Sauce supprimée !'})})
+                        // Gérer  l'échec 
+                        .catch(error => res.status(401).json({ error }));
+                });
+            } 
+        })
+        // Erreur 
+        .catch(error => {
+            res.status(500).json({error});
+        });
+};
 
 
 
 // Modifier une sauce 
+
 
 
 // Likes ou Dislikes une sauce 
