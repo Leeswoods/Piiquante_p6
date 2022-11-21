@@ -28,4 +28,4 @@ module.exports = (req, res, next) => {
         // 401 : indique que vous devez être authentifié pour faire cette requête
         res.status(401).json({ error });
     }
- };
+};
